@@ -17,16 +17,21 @@
 
 <body>
 
-    <depth-chart label="Video Id" field-name="MyFieldName" entity='{"entityId":"testEntityId","id":"testId","type":"depthchart","fullTypeName":"customentity.depthchart","referenceFields":{"depthChartPlayers":[{"entityId":"4530737c-45b4-4ae2-858e-9563a1e2e46c","type":"customentity.drivers","id":"cf7ab042-dcd9-4216-bdc0-12d60030ff77","slug":"dude","title":"dude","neutralCulture":true,"status":0,"stage":"unpublished","thumbnailUrl":"/deltatre.forge.wcm/api/customentities/drivers/working/cf7ab042-dcd9-4216-bdc0-12d60030ff77/thumbnail/_thumb","position":0,"culture":"nd-nd","neutralEntity":{"stage":"unpublished","translationId":"cf7ab042-dcd9-4216-bdc0-12d60030ff77"},"uiVisibilityStatus":2,"availableCultures":["en-us","it-it","ro-ro","ru-ru","zh-cn","ar-qa"],"uiPublishCommands":[{"name":"PublishCommand","body":{"aggregateId":"4530737c-45b4-4ae2-858e-9563a1e2e46c","aggregateType":"customentity.drivers","translationId":"cf7ab042-dcd9-4216-bdc0-12d60030ff77"}}],"uiPublishStatus":1,"$$hashKey":"object:872"},{"entityId":"0ab595ab-2922-4046-9a1a-7ecd9507aec1","type":"customentity.drivers","id":"ce8c43a8-c358-43af-b0e0-483ef812178e","slug":"dawg","title":"dawg","neutralCulture":true,"status":0,"stage":"unpublished","thumbnailUrl":"/deltatre.forge.wcm/api/customentities/drivers/working/ce8c43a8-c358-43af-b0e0-483ef812178e/thumbnail/_thumb","position":1,"culture":"nd-nd","neutralEntity":{"stage":"unpublished","translationId":"ce8c43a8-c358-43af-b0e0-483ef812178e"},"uiVisibilityStatus":2,"availableCultures":["en-us","it-it","ro-ro","ru-ru","zh-cn","ar-qa"],"uiPublishCommands":[{"name":"PublishCommand","body":{"aggregateId":"0ab595ab-2922-4046-9a1a-7ecd9507aec1","aggregateType":"customentity.drivers","translationId":"ce8c43a8-c358-43af-b0e0-483ef812178e"}}],"uiPublishStatus":1,"$$hashKey":"object:873"}]}}'
-        schema='{"type":"object","description":"Depth Chart","title":"Depth Chart","extended-type":"depth-chart","tagextradata":true}'>
+    <depth-chart label="Video Id" 
+                 field-name="depthChart"
+                 value='{"sections":[{"name":"offense","positions":[{"name":"TWP","players":["4530737c-45b4-4ae2-858e-9563a1e2e46c","0ab595ab-2922-4046-9a1a-7ecd9507aec1"]},{"name":"WRS","players":["0ab595ab-2922-4046-9a1a-7ecd9507aec1"]}]},{"name":"defense","positions":[{"name":"ASD","players":["4530737c-45b4-4ae2-858e-9563a1e2e46c"]}]},{"name":"specialTeams","positions":[]}]}'
+                 entity='{"entityId":"testEntityId","id":"testId","type":"depthchart","fullTypeName":"customentity.depthchart","referenceFields":{"depthChartPlayers":[{"entityId":"4530737c-45b4-4ae2-858e-9563a1e2e46c","type":"customentity.drivers","id":"cf7ab042-dcd9-4216-bdc0-12d60030ff77","slug":"dude","title":"dude","neutralCulture":true,"status":0,"stage":"published","thumbnailUrl":"/deltatre.forge.wcm/api/customentities/drivers/working/cf7ab042-dcd9-4216-bdc0-12d60030ff77/thumbnail/_thumb","position":0,"culture":"nd-nd","neutralEntity":{"stage":"published","translationId":"cf7ab042-dcd9-4216-bdc0-12d60030ff77"},"uiVisibilityStatus":2,"availableCultures":["en-us","it-it","ro-ro","ru-ru","zh-cn","ar-qa"],"uiPublishCommands":[{"name":"PublishCommand","body":{"aggregateId":"4530737c-45b4-4ae2-858e-9563a1e2e46c","aggregateType":"customentity.drivers","translationId":"cf7ab042-dcd9-4216-bdc0-12d60030ff77"}}],"uiPublishStatus":1,"$$hashKey":"object:872"},{"entityId":"0ab595ab-2922-4046-9a1a-7ecd9507aec1","type":"customentity.drivers","id":"ce8c43a8-c358-43af-b0e0-483ef812178e","slug":"dawg","title":"dawg","neutralCulture":true,"status":0,"stage":"unpublished","thumbnailUrl":"/deltatre.forge.wcm/api/customentities/drivers/working/ce8c43a8-c358-43af-b0e0-483ef812178e/thumbnail/_thumb","position":1,"culture":"nd-nd","neutralEntity":{"stage":"unpublished","translationId":"ce8c43a8-c358-43af-b0e0-483ef812178e"},"uiVisibilityStatus":2,"availableCultures":["en-us","it-it","ro-ro","ru-ru","zh-cn","ar-qa"],"uiPublishCommands":[{"name":"PublishCommand","body":{"aggregateId":"0ab595ab-2922-4046-9a1a-7ecd9507aec1","aggregateType":"customentity.drivers","translationId":"ce8c43a8-c358-43af-b0e0-483ef812178e"}}],"uiPublishStatus":1,"$$hashKey":"object:873"}]}}'
+                 schema='{"type":"object","description":"Depth Chart","title":"Depth Chart","extended-type":"depth-chart","tagextradata":true}'>
     </depth-chart>
 
 </body>
 
 <script>
+
     document.querySelector('depth-chart').addEventListener('sendCommand', function (e) {
         console.log('on sendCommand:', e.detail);
     });
+    
     document.querySelector('depth-chart').addEventListener('valueChanged', function (e) {
         console.log('on change:', e.detail);
     });
