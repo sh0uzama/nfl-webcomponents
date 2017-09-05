@@ -5,6 +5,8 @@
          :host {
             display: block;
         }
+
+       
     </style>
 
     <template>
@@ -15,7 +17,7 @@
 
             <div class="search-bar layout horizontal">
                 <iron-icon icon="search"></iron-icon>
-                <paper-input class="flex" value="{{search}}" on-input="_searchChanged" on-change="_searchChanged" no-label-float="true"></paper-input>
+                <paper-input class="flex" value="{{search}}" on-input="_searchChanged" on-change="_searchChanged" no-label-float="true" label="Player Name" always-float-label></paper-input>
             </div>
 
             <paper-dialog-scrollable class="search-content">
@@ -34,8 +36,8 @@
             </paper-dialog-scrollable>
 
             <div class="buttons">
-                <paper-button dialog-dismiss>Cancel</paper-button>
-                <paper-button dialog-confirm>Insert</paper-button>
+                <paper-button dialog-dismiss raised>Cancel</paper-button>
+                <paper-button dialog-confirm raised>Insert</paper-button>
             </div>
 
         </paper-dialog>

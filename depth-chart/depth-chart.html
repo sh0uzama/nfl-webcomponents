@@ -7,37 +7,51 @@
 		:host {
 			display: block;
 		}
+
+		.section-add-position{
+			margin-bottom: 20px;
+		}
+
+		.section-header{
+			background: #eee;
+    		padding: 10px;
+    		text-transform: uppercase;
+			border-bottom: solid 1px #999;
+		}
 	</style>
 
 	<template>
-
 		<template is="dom-repeat" items="[[value.sections]]" as="section" index-as="sectionIndex">
 
-			<div>[[localize(section.name)]]</div>
+			<div class="section-header">[[localize(section.name)]]</div>
 
 			<template is="dom-repeat" items="[[section.positions]]" as="position" index-as="positionIndex" section-index="[[sectionIndex]]">
 
 				<div class="layout horizontal">
 
-					<paper-input value="{{position.name}}" on-input="_onPositionChange" on-change="_onPositionChange" no-label-float="true"></paper-input>
+					<paper-input value="{{position.name}}" on-input="_onPositionChange" on-change="_onPositionChange" no-label-float="true" label="Position Code" always-float-label></paper-input>
 
 					<div class="flex layout horizontal wrap">
 
 						<template is="dom-repeat" items="[[position.players]]" as="player" index-as="playerIndex">
-
-							<div>[[player]]</div>
-
+						<div>[[player]]</div>
 						</template>
-
-						<paper-icon-button icon="add" on-tap="_addPlayer"></paper-icon-button>
+						<div>
+							<paper-icon-button icon="add" on-tap="_addPlayer" title="Add Player"></paper-icon-button>
+							<span>Add Player</span>
+						</div>
+						
 
 					</div>
 				</div>
 
 			</template>
 
-			<paper-icon-button icon="add" on-tap="_addPosition"></paper-icon-button>
-
+			<div class="section-add-position">
+				<paper-icon-button icon="add" on-tap="_addPosition"  title="Add Position"></paper-icon-button>
+				<span>Add Position</span>
+			</div>
+			
 		</template>
 
 		<search-players id="searchPlayers" on-player-selected="_playerSelected"></search-players>
@@ -65,8 +79,8 @@
 			//this.sections.push(new DepthChartSection("offense"));
 			this.sections.push(new DepthChartSection("defense"));
 			this.sections.push(new DepthChartSection("specialTeams"));
-			this.sections.push(new DepthChartSection("practiceSquad"));
-			this.sections.push(new DepthChartSection("reserves"));
+			//this.sections.push(new DepthChartSection("practiceSquad"));
+			//this.sections.push(new DepthChartSection("reserves"));
 		}
 
 		function createAddReferenceFieldItemsCommand(entity, player, fieldName) {
