@@ -1,0 +1,178 @@
+<link rel="import" href="../search-players/search-players.html">
+
+<dom-module id="depth-chart">
+
+	<style is="custom-style" include="iron-flex iron-flex-alignment" />
+	<style>
+		:host {
+			display: block;
+		}
+	</style>
+
+	<template>
+
+		<template is="dom-repeat" items="[[value.sections]]" as="section" index-as="sectionIndex">
+
+			<div>[[localize(section.name)]]</div>
+
+			<template is="dom-repeat" items="[[section.positions]]" as="position" index-as="positionIndex" section-index="[[sectionIndex]]">
+
+				<div class="layout horizontal">
+
+					<paper-input value="{{position.name}}" on-input="_onPositionChange" on-change="_onPositionChange" no-label-float="true"></paper-input>
+
+					<div class="flex layout horizontal wrap">
+
+						<template is="dom-repeat" items="[[position.players]]" as="player" index-as="playerIndex">
+
+							<div>[[player]]</div>
+
+						</template>
+
+						<paper-icon-button icon="add" on-tap="_addPlayer"></paper-icon-button>
+
+					</div>
+				</div>
+
+			</template>
+
+			<paper-icon-button icon="add" on-tap="_addPosition"></paper-icon-button>
+
+		</template>
+
+		<search-players id="searchPlayers" on-player-selected="_playerSelected"></search-players>
+
+	</template>
+
+	<script>
+
+		function DepthChartSection(name) {
+			this.name = name || null; // string
+			this.positions = []; // array<DepthChartPosition>
+		}
+
+		function DepthChartPosition(name) {
+			this.name = name || null; //string
+			this.players = []; // array<guid> - guid of the Player customentity
+		}
+
+		function DepthChart() {
+			this.sections = [];
+
+			var a = new DepthChartSection("offense");
+			a.positions.push(new DepthChartPosition());
+			this.sections.push(a);
+			//this.sections.push(new DepthChartSection("offense"));
+			this.sections.push(new DepthChartSection("defense"));
+			this.sections.push(new DepthChartSection("specialTeams"));
+			this.sections.push(new DepthChartSection("practiceSquad"));
+			this.sections.push(new DepthChartSection("reserves"));
+		}
+
+		function createAddReferenceFieldItemsCommand(entity, player, fieldName) {
+
+			const entityType = player.EntityCode ? player.EntityType + "." + player.EntityCode : player.EntityType;
+
+			const commandBody = {
+				aggregateId: entity.entityId,
+				aggregateType: entity.fullTypeName || entity.type,
+				translationId: entity.id,
+				fieldName: fieldName,
+				referencedItems: [
+					{
+						entityType: entityType,
+						entityId: player.EntityId
+					}
+				]
+			};
+
+			if (!commandBody.aggregateId || !commandBody.translationId || !commandBody.aggregateType) {
+				throw "Invalid entity status (entity is not existing or not initialized correctly)";
+			}
+
+			return { commandName: 'AddReferenceFieldItemsCommand', commandBody: commandBody };
+
+		}
+
+		Polymer({
+			is: "depth-chart",
+			behaviors: [
+				ForgeWebComponents.Behaviors.ForgeLocalizeBehavior
+			],
+			properties: {
+				value: {
+					type: Object,
+					value: new DepthChart(),
+					observer: '_valueChanged'
+				},
+				label: {
+					type: String
+				},
+				fieldName: {
+					type: String
+				},
+				entity: {
+					type: Object,
+					observer: '_entityChanged'
+				},
+				schema: {
+					type: Object
+				},
+				disabled: {
+					type: Boolean,
+					value: false
+				}
+			},
+
+			ready: function () {
+				this._currentSectionIndex = null;
+				this._currentPositionIndex = null;
+			},
+
+			_valueChanged: function (newValue, oldValue) {
+				if (!newValue) this.value = new DepthChart();
+			},
+
+			_entityChanged: function (entity, oldValue) {
+
+				if (!entity || typeof entity === 'string') return;
+
+				console.log(entity);
+				// read reference players and update property value flagging unpublished players
+
+			},
+
+			_onPositionChange: function () {
+				// trigger custom field change
+			},
+
+			_addPosition: function (e) {
+				var path = "value.sections." + e.model.sectionIndex + ".positions";
+				this.push(path, new DepthChartPosition());
+			},
+
+			_addPlayer: function (e) {
+				this._currentSectionIndex = e.model.dataHost.sectionIndex;
+				this._currentPositionIndex = e.model.positionIndex;
+				this.$.searchPlayers.open();
+			},
+
+			_playerSelected: function (e) {
+
+				const player = e.detail.player;
+				var path = "value.sections." + this._currentSectionIndex + ".positions." + this._currentPositionIndex + ".players";
+				this.push(path, player.EntityId);
+				this._currentSectionIndex = null;
+				this._currentPositionIndex = null;
+
+				const command = createAddReferenceFieldItemsCommand(this.entity, player);
+
+				this.fire('sendCommand', command);
+				this.fire('valueChanged', this.value);
+	
+			}
+
+		});
+	</script>
+
+</dom-module>
