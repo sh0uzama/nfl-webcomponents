@@ -18,6 +18,36 @@
 			text-transform: uppercase;
 			border-bottom: solid 1px #999;
 		}
+
+		player-card,
+		.player-card {
+			margin: 0 8px 8px;
+			height: 278px;
+			width: 192px;
+		}
+
+		.position-row {
+			margin: 8px 0;
+		}
+
+		.position-input-container {
+			width: 160px;
+		}
+
+		.add-player-card {
+			color: var(--paper-blue-500);
+			cursor: pointer;
+		}
+
+		.add-player-card .add-icon {
+			width: 160px;
+			height: 160px;
+		}
+
+		.add-player-card .add-text {
+			text-align: center;
+			padding: 8px 0;
+		}
 	</style>
 
 	<template>
@@ -28,26 +58,31 @@
 
 			<template is="dom-repeat" items="[[section.positions]]" as="position" index-as="positionIndex" section-index="[[sectionIndex]]">
 
-				<div class="layout horizontal">
+				<div class="layout horizontal position-row">
 
-					<paper-input value="{{position.name}}" on-input="_onPositionInput" on-change="_onPositionChange" no-label-float="true" label="Position Code"
-					 always-float-label></paper-input>
+					<div class="position-input-container layout vertical">
+						<paper-input value="{{position.name}}" on-input="_onPositionInput" on-change="_onPositionChange" no-label-float="true" label="Position Code"></paper-input>
+
+						<div class="layout vertical flex center-center">
+							<paper-icon-button icon="delete" on-tap="_deletePosition"></paper-icon-button>
+						</div>
+					</div>
 
 					<div class="flex layout horizontal wrap">
 
 						<template is="dom-repeat" items="[[position.players]]" as="playerEntityId" index-as="playerIndex" section-index="[[sectionIndex]]"
 						 position-index="[[positionIndex]]">
-							<paper-card>
-								<player-card class="card-content" player="[[_getPlayer(playerEntityId)]]"></player-card>
-								<div class="card-actions">
-									<paper-button on-tap="_deletePlayer">DELETE</paper-button>
-								</div>
-							</paper-card>
+
+							<player-card player="[[_getPlayer(playerEntityId)]]" on-delete-player="_deletePlayer"></player-card>
+							
 						</template>
-						<div>
-							<paper-icon-button icon="add" on-tap="_addPlayer" title="Add Player"></paper-icon-button>
-							<span>Add Player</span>
-						</div>
+
+						<paper-card class="player-card add-player-card" on-tap="_addPlayer">
+							<div class="card-content">
+								<iron-icon class="add-icon" icon="add"></iron-icon>
+								<div class="add-text">Add New Player</div>
+							</div>
+						</paper-card>
 
 
 					</div>
@@ -55,9 +90,11 @@
 
 			</template>
 
-			<div class="section-add-position">
-				<paper-icon-button icon="add" on-tap="_addPosition" title="Add Position"></paper-icon-button>
-				<span>Add Position</span>
+			<div class="section-add-position layout horizontal">
+				<paper-button class="flex" on-tap="_addPosition">
+					<iron-icon icon="add"></iron-icon>
+					Add New Position
+				</paper-button>
 			</div>
 
 		</template>

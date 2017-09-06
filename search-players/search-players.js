@@ -46,9 +46,13 @@
                 this.dispatchEvent(createPlayerSelectedEvent(this._selectedPlayer));
             }
         },
-        _selectItem: function (e) {
+        _select: function (e) {
             var item = e.model.item;
             this._selectedPlayer = item;
+        },
+        _selectAndConfirm: function (e) {
+            this.$.searchModal.close();
+            this.dispatchEvent(createPlayerSelectedEvent(this._selectedPlayer));
         },
         ready: function () {
             this._selectedPlayer = null;

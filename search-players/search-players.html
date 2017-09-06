@@ -1,8 +1,16 @@
 <dom-module id="search-players">
 
     <style include="iron-flex iron-flex-alignment">
-         :host {
-            display: block;
+        paper-dialog {
+            min-width: 400px;
+        }
+
+        .search-bar iron-icon {
+            margin: 10px;
+        }
+
+        .player-item {
+            cursor: pointer;
         }
     </style>
 
@@ -22,7 +30,7 @@
 
                 <template is="dom-repeat" items="[[_results]]">
 
-                    <paper-item on-tap="_selectItem">
+                    <paper-item class="player-item" on-click="_select" on-dblclick="_selectAndConfirm">
                         <paper-item-body two-line>
                             <div>[[item.Title]]</div>
                             <div secondary>[[item.Slug]]</div>
@@ -34,8 +42,7 @@
             </paper-dialog-scrollable>
 
             <div class="buttons">
-                <paper-button dialog-dismiss raised>Cancel</paper-button>
-                <paper-button dialog-confirm raised>Insert</paper-button>
+                <paper-button dialog-dismiss>Close</paper-button>
             </div>
 
         </paper-dialog>
