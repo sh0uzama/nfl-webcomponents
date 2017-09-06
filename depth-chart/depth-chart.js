@@ -165,9 +165,11 @@
             const player = e.detail.player;
 
             // verify if player is already in this section
-            const playerAlreadyInserted = this.value.sections[this._currentSectionIndex].positions[this._currentPositionIndex].indexOf(player.EntityId) > -1;
+            
+            const playerAlreadyInserted = this.value.sections[this._currentSectionIndex].positions[this._currentPositionIndex].players.indexOf(player.EntityId) > -1;
             if (playerAlreadyInserted) {
                 // show warning
+                toastWarningPlayerPosition.open();
                 return;
             }
 

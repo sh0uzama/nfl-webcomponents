@@ -12,11 +12,10 @@
 			margin-bottom: 20px;
 		}
 
-		.section-header {
-			background: #eee;
-			padding: 10px;
+		paper-toolbar.section-header {
 			text-transform: uppercase;
-			border-bottom: solid 1px #999;
+			--paper-toolbar-background: #eee;
+			color:#000;
 		}
 
 		player-card,
@@ -34,6 +33,10 @@
 			width: 160px;
 		}
 
+		.position-input-container paper-icon-button {
+			color: var(--paper-blue-500);
+		}
+
 		.add-player-card {
 			color: var(--paper-blue-500);
 			cursor: pointer;
@@ -48,13 +51,19 @@
 			text-align: center;
 			padding: 8px 0;
 		}
+
+		paper-toast iron-icon {
+			color: #ff9800;
+		}
 	</style>
 
 	<template>
 
 		<template is="dom-repeat" items="[[value.sections]]" as="section" index-as="sectionIndex">
 
-			<div class="section-header">[[localize(section.name)]]</div>
+			<paper-toolbar class="section-header">
+				<span slot="top">[[localize(section.name)]]</span>
+			</paper-toolbar>
 
 			<template is="dom-repeat" items="[[section.positions]]" as="position" index-as="positionIndex" section-index="[[sectionIndex]]">
 
@@ -74,7 +83,7 @@
 						 position-index="[[positionIndex]]">
 
 							<player-card player="[[_getPlayer(playerEntityId)]]" on-delete-player="_deletePlayer"></player-card>
-							
+
 						</template>
 
 						<paper-card class="player-card add-player-card" on-tap="_addPlayer">
@@ -101,6 +110,10 @@
 
 		<search-players id="searchPlayers" on-player-selected="_playerSelected"></search-players>
 
+		<paper-toast id="toastWarningPlayerPosition" duration="4000">
+			<iron-icon icon="warning"></iron-icon>
+			<span class="flex">The player is already in this position.</span>
+		</paper-toast>
 	</template>
 
 	<script src="depth-chart.js"></script>
