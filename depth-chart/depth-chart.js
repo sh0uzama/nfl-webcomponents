@@ -49,13 +49,14 @@
 
     }
 
-    function PlayerReference(entityId, translationId, title, type, stage) {
+    function PlayerReference(entityId, translationId, title, type, stage, thumbnailUrl) {
         this.entityId = entityId;
         this.translationId = translationId;
         this.title = title;
         this.type = type;
         this.unpublished = stage === "unpublished";
         this.link = ForgeWebComponents.Helpers.EntityHelper.createLink(type, entityId, translationId);
+        this.thumbnail = thumbnailUrl || ForgeWebComponents.Helpers.EntityHelper.createThumbnailUrl(type, translationId);
     }
 
     Polymer({
@@ -114,7 +115,7 @@
             this._players = {};
             for (var i = 0; i < array.length; i++) {
                 var player = array[i];
-                this._players[player.entityId] = new PlayerReference(player.entityId, player.id, player.title, player.type, player.stage);
+                this._players[player.entityId] = new PlayerReference(player.entityId, player.id, player.title, player.type, player.stage, player.thumbnailUrl);
             }
 
         },
@@ -166,6 +167,8 @@
 
             // verify if player is already in this section
             
+            console.log(player);
+
             const playerAlreadyInserted = this.value.sections[this._currentSectionIndex].positions[this._currentPositionIndex].players.indexOf(player.EntityId) > -1;
             if (playerAlreadyInserted) {
                 // show warning

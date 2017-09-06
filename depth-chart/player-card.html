@@ -9,6 +9,18 @@
         .player-thumbnail {
             width: 160px;
             height: 160px;
+            position: relative;
+        }
+
+        .player-thumbnail .icon-placeholder {
+            position: absolute;
+            top: 0;
+            left: 0;
+            color: gray;
+        }
+
+        .player-thumbnail .icon-missing {
+            color: var(--status-red-color);
         }
 
         .player-thumbnail iron-image {
@@ -66,7 +78,7 @@
                 <div class="card-content">
 
                     <div class="player-thumbnail">
-                        <iron-icon icon="social:person"></iron-icon>
+                        <iron-icon class="icon-missing" icon="social:person"></iron-icon>
                     </div>
 
                     <div class="player-name">(unknown)</div>
@@ -87,7 +99,8 @@
                 <div class="card-content">
 
                     <div class="player-thumbnail">
-                        <iron-image src="[[_thumbUrl]]" sizing="contain"></iron-image>
+                        <iron-icon class="icon-placeholder" icon="social:person"></iron-icon>
+                        <iron-image src="[[player.thumbnail]]" sizing="contain"></iron-image>
                     </div>
 
                     <div class="player-name">[[player.title]]</div>
