@@ -56,10 +56,12 @@
         },
         ready: function () {
             this._selectedPlayer = null;
+            this.search = null;
             this._results = [];
         },
         open: function () {
             this._selectedPlayer = null;
+            this.search = null;
             this.$.searchModal.open();
         }
     });
