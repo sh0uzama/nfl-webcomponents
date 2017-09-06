@@ -182,7 +182,7 @@
             this.push(path, player.EntityId);
 
             const entityType = player.EntityCode ? player.EntityType + "." + player.EntityCode : player.EntityType;
-            this._players[player.EntityId] = new PlayerReference(player.EntityId, player.TranslationId, player.Title, entityType, player.Stage);
+            this._players[player.EntityId] = new PlayerReference(player.EntityId, player.Id, player.Title, entityType, player.Stage);
 
             this._currentSectionIndex = null;
             this._currentPositionIndex = null;
