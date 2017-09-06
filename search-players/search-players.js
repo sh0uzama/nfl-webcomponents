@@ -31,11 +31,9 @@
             api.raw(url).then(function (result) {
                 self._hideLoading = true;
                 self._results = result;
-                this.$.searchModal.notifyResize();
             }, function () {
                 self._hideLoading = true;
                 self._results = [];
-                this.$.searchModal.notifyResize();
                 console.error(arguments);
             });
     
@@ -65,7 +63,6 @@
             this._selectedPlayer = null;
             this.search = null;
             this.$.searchModal.open();
-            this.$.searchModal.notifyResize();
         }
     });
 
