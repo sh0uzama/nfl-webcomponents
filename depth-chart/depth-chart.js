@@ -111,7 +111,7 @@
 
             console.log(entity);
 
-            const array = entity.referenceFields.depthChartPlayers;
+            const array = entity.referenceFields.depthChartPlayers || [];
             this._players = {};
             for (var i = 0; i < array.length; i++) {
                 var player = array[i];
