@@ -1,5 +1,7 @@
 (function () {
 
+    const REFERENCE_FIELD_NAME = "depthChartPlayers";
+
     function DepthChartSection(name) {
         this.name = name || null; // string
         this.positions = []; // array<DepthChartPosition>
@@ -33,19 +35,19 @@
         ];
     }
 
-    function AddReferenceFieldItemsCommand(entity, player, fieldName) {
+    function AddReferenceFieldItemsCommand(entity, player) {
 
         const entityType = player.EntityCode ? player.EntityType + "." + player.EntityCode : player.EntityType;
 
         this.commandName = "AddReferenceFieldItemsCommand";
-        this.commandBody = new ReferenceFieldItemsCommandBody(entity.entityId, entity.id, entity.fullTypeName || entity.type, fieldName, player.EntityId, entityType);
+        this.commandBody = new ReferenceFieldItemsCommandBody(entity.entityId, entity.id, entity.fullTypeName || entity.type, REFERENCE_FIELD_NAME, player.EntityId, entityType);
 
     }
 
-    function RemoveReferenceFieldItemsCommand(entity, player, fieldName) {
+    function RemoveReferenceFieldItemsCommand(entity, player) {
 
         this.commandName = "RemoveReferenceFieldItemsCommand";
-        this.commandBody = new ReferenceFieldItemsCommandBody(entity.entityId, entity.id, entity.fullTypeName || entity.type, fieldName, player.entityId, player.type);
+        this.commandBody = new ReferenceFieldItemsCommandBody(entity.entityId, entity.id, entity.fullTypeName || entity.type, REFERENCE_FIELD_NAME, player.entityId, player.type);
 
     }
 
@@ -111,7 +113,7 @@
 
             console.log(entity);
 
-            const array = entity.referenceFields.depthChartPlayers || [];
+            const array = entity.referenceFields[REFERENCE_FIELD_NAME] || [];
             this._players = {};
             for (var i = 0; i < array.length; i++) {
                 var player = array[i];
