@@ -20,7 +20,7 @@
         },
         _getData: function () {
     
-            var url = "/deltatre.forge.wcm/api/customEntities/players/working?language=nd-nd&stage=published&terms=";
+            var url = "/deltatre.forge.wcm/api/customEntities/player/working?language=nd-nd&stage=published&terms=";
     
             url = url + encodeURI(this.search);
     
