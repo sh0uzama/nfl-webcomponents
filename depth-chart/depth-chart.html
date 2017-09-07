@@ -73,12 +73,21 @@
 			<template is="dom-repeat" items="[[section.positions]]" as="position" index-as="positionIndex" section-index="[[sectionIndex]]">
 
 				<div class="layout horizontal position-row">
+					<div class="layout vertical">
+						<div class="position-input-container layout horizontal">
+							<paper-icon-button icon="delete" on-tap="_deletePosition"></paper-icon-button>
+							<paper-input class="flex" value="{{position.name}}" on-input="_onPositionInput" on-change="_onPositionChange" no-label-float="true"
+							 label="Position Code"></paper-input>
+						</div>
+						<div>
+							<paper-button class="flex" on-tap="_addPlayer">
+								<iron-icon icon="add"></iron-icon>
+								Add New Player
+							</paper-button>
+						</div>
 
-					<div class="position-input-container layout horizontal">
-						<paper-icon-button icon="delete" on-tap="_deletePosition"></paper-icon-button>
-						<paper-input class="flex" value="{{position.name}}" on-input="_onPositionInput" on-change="_onPositionChange" no-label-float="true"
-						 label="Position Code"></paper-input>
 					</div>
+
 
 					<div class="flex layout horizontal wrap">
 						<sortable-js class=" layout horizontal wrap" on-end="_sortChange">
@@ -87,12 +96,7 @@
 								<player-card player="[[_getPlayer(playerEntityId)]]" on-delete-player="_deletePlayer"></player-card>
 							</template>
 						</sortable-js>
-						<paper-card class="player-card add-player-card" on-tap="_addPlayer">
-							<div class="card-content">
-								<iron-icon class="add-icon" icon="add"></iron-icon>
-								<div class="add-text">Add New Player</div>
-							</div>
-						</paper-card>
+
 					</div>
 				</div>
 
@@ -116,6 +120,6 @@
 	</template>
 
 	<script src="depth-chart.js"></script>
-	
+
 
 </dom-module>
