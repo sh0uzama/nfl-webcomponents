@@ -194,6 +194,10 @@
 
         },
 
+        _sortChange: function(e){
+            this.debounce('triggerOnValueChanged', this._triggerValueChanged, 0);
+        },
+
         _triggerValueChanged: function () {
             this.fire('valueChanged', this.value);
         },

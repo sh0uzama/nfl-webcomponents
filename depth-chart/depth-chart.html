@@ -1,6 +1,8 @@
 <link rel="import" href="../search-players/search-players.html">
 <link rel="import" href="player-card.html">
 
+<link rel="import" href="../sortablejs/polymer-sortablejs.html" />
+
 <dom-module id="depth-chart">
 
 	<style include="iron-flex iron-flex-alignment">
@@ -58,6 +60,8 @@
 		}
 	</style>
 
+
+
 	<template>
 
 		<template is="dom-repeat" items="[[value.sections]]" as="section" index-as="sectionIndex">
@@ -77,20 +81,29 @@
 					</div>
 
 					<div class="flex layout horizontal wrap">
-
-						<template is="dom-repeat" items="[[position.players]]" as="playerEntityId" index-as="playerIndex" section-index="[[sectionIndex]]"
+						<sortable-js class="flex layout horizontal wrap" on-end="_sortChange">
+							<template is="dom-repeat" items="[[position.players]]" as="playerEntityId" index-as="playerIndex" section-index="[[sectionIndex]]"
+							 position-index="[[positionIndex]]">
+								<player-card player="[[_getPlayer(playerEntityId)]]" on-delete-player="_deletePlayer"></player-card>
+							</template>
+							<paper-card class="player-card add-player-card" on-tap="_addPlayer">
+								<div class="card-content">
+									<iron-icon class="add-icon" icon="add"></iron-icon>
+									<div class="add-text">Add New Player</div>
+								</div>
+							</paper-card>
+						</sortable-js>
+						<!--<template is="dom-repeat" items="[[position.players]]" as="playerEntityId" index-as="playerIndex" section-index="[[sectionIndex]]"
 						 position-index="[[positionIndex]]">
-
-							<player-card player="[[_getPlayer(playerEntityId)]]" on-delete-player="_deletePlayer"></player-card>
-
-						</template>
-
+						 	<player-card player="[[_getPlayer(playerEntityId)]]" on-delete-player="_deletePlayer"></player-card>
+						</template>-->
+<!--
 						<paper-card class="player-card add-player-card" on-tap="_addPlayer">
 							<div class="card-content">
 								<iron-icon class="add-icon" icon="add"></iron-icon>
 								<div class="add-text">Add New Player</div>
 							</div>
-						</paper-card>
+						</paper-card>-->
 
 
 					</div>
@@ -116,5 +129,6 @@
 	</template>
 
 	<script src="depth-chart.js"></script>
+
 
 </dom-module>
